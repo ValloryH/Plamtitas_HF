@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/estilo.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="./js/script.js"></script> 
+  </head>
+  <body>
+    <form action="" method="post">
+      <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre"  name="nombre"  />
+      </div>
+      <div>
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha"  name="fecha" />
+      </div>
+      <div>
+        <label for="contenido">Contenido:</label>
+        <textarea id="contenido" name="contenido" ></textarea>
+      </div>
+      <div>
+        <label for="foto">Foto:</label>
+        <input type="text" id="foto"  name="foto" />
+      </div>
+      <div>
+        <button>Guardar</button>
+      </div>
+    </form>
+    <script>
+      const form = document.querySelector("form");
+      form.addEventListener("submit", (ev) => {
+        ev.preventDefault();
+        fetch("guardar.php", {
+          method: "POST",
+          body: new FormData(form),
+        })
+          .then((solicitud) => solicitud.json())
+          .then((resultado) => {
+            if (resultado.respuesta == "ok") {
+              confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+              });
+            } else {
+              Swal.fire({
+            title: "Noo mi compaa!!",
+            text: "Mi lidel, usted no gualdo na!!",
+            imageUrl: "https://www.webconsultas.com/sites/default/files/styles/wc_adaptive_image__small/public/temas/adopotar-mascota-por-internet.jpg",
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: "cuachiloco"
+                  });
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
